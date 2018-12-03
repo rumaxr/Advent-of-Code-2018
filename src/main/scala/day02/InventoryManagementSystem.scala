@@ -20,7 +20,7 @@ object InventoryManagementSystem {
     idList
       .combinations(2)
       .map(combination => {
-        if ((combination.head, combination(1)).zipped.map(_ == _).count(_ == true) == combination.head.length - 1) {
+        if ((combination.head, combination.last).zipped.map(_ == _).count(_ == true) == combination.head.length - 1) {
           combination
         }
         else
