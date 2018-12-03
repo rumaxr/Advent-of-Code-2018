@@ -35,9 +35,13 @@ class ChronalCalibrationSpec extends Specification {
       "calibrate the list +7, +7, -2, -7, -4" >> {
         ChronalCalibration.calibrate2(List("+7", "+7", "-2", "-7", "-4")) === 14
       }
+//      "calibrate the input list" >> {
+//        val lineList: List[String] = Source.fromFile(getClass.getResource("/day01/input.txt").getPath).getLines.toList
+//        ChronalCalibration.calibrate2(lineList) === 481
+//      }
       "calibrate the input list" >> {
         val lineList: List[String] = Source.fromFile(getClass.getResource("/day01/input.txt").getPath).getLines.toList
-        ChronalCalibration.calibrate2(lineList) === 481
+        ChronalCalibration.calibrate2Streamed(lineList.map(_.toInt)) === 481
       }
     }
   }
