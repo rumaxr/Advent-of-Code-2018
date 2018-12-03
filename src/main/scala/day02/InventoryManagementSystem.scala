@@ -2,25 +2,17 @@ package day02
 
 object InventoryManagementSystem {
   def checkSum(idList: List[String]): Int = {
-    val result = idList.map(line => {
-      val map = line.groupBy(identity).mapValues(_.length)
-      val valueList = map.values.toList
-      val containsTwo = valueList.contains(2)
-      val containsThree = valueList.contains(3)
+    val charCountList = idList.map(_
+      .groupBy(identity)
+      .values
+      .map(_.length)
+      .toSet
+    )
+      .foldLeft((0, 0)) {
+        case (countData, charCount) =>
+          (countData._1 + charCount.count(_ == 2), countData._2 + charCount.count(_ == 3))
+      }
 
-      if (containsTwo && containsThree)
-        (1, 1)
-      else if (containsTwo)
-        (1, 0)
-      else if (containsThree)
-        (0, 1)
-      else
-        (0, 0)
-    })
-      .foldLeft((0, 0))((tuple, acc) => {
-        (acc._1 + tuple._1, acc._2 + tuple._2)
-      })
-
-    result._1 * result._2
+    charCountList._1 * charCountList._2
   }
 }
