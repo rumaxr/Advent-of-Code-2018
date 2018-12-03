@@ -15,4 +15,23 @@ object InventoryManagementSystem {
 
     charCountList._1 * charCountList._2
   }
+
+  def findCorrectBoxes(idList: List[String]): List[String] = {
+    idList
+      .combinations(2)
+      .map(combination => {
+        if ((combination.head, combination(1)).zipped.map(_ == _).count(_ == true) == combination.head.length - 1) {
+          combination
+        }
+        else
+          List.empty[String]
+      })
+      .filter(_.nonEmpty)
+      .flatten
+      .toList
+  }
+
+  def removeDiffer(strA: String, strB: String): String = {
+    (strA, strB).zipped.filter(_ == _)._1
+  }
 }
