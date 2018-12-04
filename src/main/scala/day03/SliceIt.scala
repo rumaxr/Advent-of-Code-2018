@@ -1,6 +1,6 @@
 package day03
 
-import scala.util.matching.Regex.Match
+import scala.util.matching.Regex
 
 case class ClaimDetail(index: Int, x: Int, y: Int, width: Int, height: Int)
 
@@ -66,17 +66,11 @@ object SliceIt {
     }
   }
 
+  private val claimRegex: Regex = """#([\d]+)\s@\s(\d+),(\d+):\s(\d+)x(\d+)""".r
+
   def extractClaimDetail(claim: String): ClaimDetail = {
-    val m: Match = """#([\d]+)\s@\s(\d+),(\d+):\s(\d+)x(\d+)""".r.findFirstMatchIn(claim).toList.head
-
-    def getIntFromGroup(regexMatch: Match, groupId: Int): Int = regexMatch.group(groupId).toInt
-
-    ClaimDetail(
-      index = getIntFromGroup(m, 1),
-      x = getIntFromGroup(m, 2),
-      y = getIntFromGroup(m, 3),
-      width = getIntFromGroup(m, 4),
-      height = getIntFromGroup(m, 5)
-    )
+    claim match {
+      case claimRegex(index, x, y, width, height) => ClaimDetail(index.toInt, x.toInt, y.toInt, width.toInt, height.toInt)
+    }
   }
 }
