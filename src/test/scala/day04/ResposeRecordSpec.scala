@@ -1,35 +1,46 @@
 package day04
 
+import day04.ReposeRecord.{BeginShift, FallAsleep, Record, WakeUp}
 import org.specs2.mutable.Specification
+
+import scala.io.Source
 
 class ResposeRecordSpec extends Specification {
   "A `ResposeRecord`" should {
-    "when calling lineListToEventList" >> {
-      "return a list of events" >> {
-        val list = List(
-          "[1518-11-01 00:05] falls asleep",
-          "[1518-11-01 00:00] Guard #10 begins shift",
-          "[1518-11-01 00:25] wakes up"
+    "when calling parseRecords" >> {
+      "return a list of Record" >> {
+        val input =
+          """[1518-11-01 00:05] falls asleep
+[1518-11-01 00:00] Guard #10 begins shift
+[1518-11-01 00:25] wakes up"""
+
+        ReposeRecord.parseRecords(input) === List(
+          Record("1518-11-01 00:00", BeginShift(10)),
+          Record("1518-11-01 00:05", FallAsleep),
+          Record("1518-11-01 00:25", WakeUp),
         )
-        val result = ReposeRecord.lineListToEventList(list)
-
-        result.length === 3
-
-        result.head.isInstanceOf[BeginsShiftEvent]
-        result.head.timestamp.getDayOfMonth === 1
-        result.head.timestamp.getMonthOfYear === 11
-        result.head.timestamp.getYear === 1518
-        result.head.timestamp.getHourOfDay === 0
-        result.head.timestamp.getMinuteOfHour === 0
-        result.head.asInstanceOf[BeginsShiftEvent].guardId === 10
-
-        result(1).isInstanceOf[FallAsleepEvent]
-        result(1).timestamp.getHourOfDay === 0
-        result(1).timestamp.getMinuteOfHour === 5
-
-        result(2).isInstanceOf[WakesUpEvent]
-        result(2).timestamp.getHourOfDay === 0
-        result(2).timestamp.getMinuteOfHour === 25
+      }
+    }
+    "when calling parseRecords" >> {
+      "Strategy1" >> {
+        "on test input" >> {
+          val input: String = Source.fromInputStream(getClass.getResourceAsStream("/day04/input_test.txt")).mkString.trim
+          ReposeRecord.Strategy1.choose(input) === 240
+        }
+        "on actual input" >> {
+          val input: String = Source.fromInputStream(getClass.getResourceAsStream("/day04/input.txt")).mkString.trim
+          ReposeRecord.Strategy1.choose(input) === 118599
+        }
+      }
+      "Strategy2" >> {
+        "on test input" >> {
+          val input: String = Source.fromInputStream(getClass.getResourceAsStream("/day04/input_test.txt")).mkString.trim
+          ReposeRecord.Strategy2.choose(input) === 4455
+        }
+        "on actual input" >> {
+          val input: String = Source.fromInputStream(getClass.getResourceAsStream("/day04/input.txt")).mkString.trim
+          ReposeRecord.Strategy2.choose(input) === 33949
+        }
       }
     }
   }
