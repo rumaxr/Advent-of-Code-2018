@@ -4,5 +4,6 @@
 - [Day 2: Inventory Management System](src/main/scala/day02)
 - [Day 3: No Matter How You Slice It](src/main/scala/day03)
 - [Day 4: Repose Record](src/main/scala/day04)
+- [Day 5: Alchemical Reduction](src/main/scala/day05)
 
 [Advent of code ->](https://adventofcode.com/)
