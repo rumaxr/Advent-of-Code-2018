@@ -8,7 +8,7 @@ object InventoryManagementSystem {
       .map(_.length)
       .toSet
     )
-      .foldLeft((0, 0)) {
+      .foldLeft[(Int, Int)]((0, 0)) {
         case (countData, charCount) =>
           (countData._1 + charCount.count(_ == 2), countData._2 + charCount.count(_ == 3))
       }
@@ -20,7 +20,13 @@ object InventoryManagementSystem {
     idList
       .combinations(2)
       .map(combination => {
-        if ((combination.head, combination.last).zipped.map(_ == _).count(_ == true) == combination.head.length - 1) {
+
+        val combinationCount: Int = (combination.head.toCharArray, combination.last.toCharArray)
+          .zipped
+          .map(_ == _)
+          .count(_ == true)
+
+        if (combinationCount == combination.head.length - 1) {
           combination
         }
         else
@@ -32,6 +38,6 @@ object InventoryManagementSystem {
   }
 
   def removeDiffer(strA: String, strB: String): String = {
-    (strA, strB).zipped.filter(_ == _)._1
+    (strA, strB).zipped.filter(_ == _)._1.toString
   }
 }

@@ -1,12 +1,11 @@
-name := "advent-of-code-2017"
+name := "advent-of-code-2018"
 
 version := "0.1"
 
-scalaVersion := "2.12.7"
+scalaVersion := "2.13.1"
 
 libraryDependencies ++= Seq(
-  "com.github.nscala-time" %% "nscala-time" % "2.20.0",
-  "org.specs2" %% "specs2-core" % "4.3.5" % "test"
+  "org.specs2" %% "specs2-core" % "4.7.1" % "test"
 )
 
 scalacOptions in Test ++= Seq("-Yrangepos")
